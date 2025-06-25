@@ -58,7 +58,7 @@ export class UserTable implements OnInit {
   }
 
   saveEdit(row: any) {
-    // Logic to track/save changes
+    // Logic to save changes
     this.editingRowId = null;
   }
 
