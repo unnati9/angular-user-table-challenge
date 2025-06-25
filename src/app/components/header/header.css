@@ -8,6 +8,13 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
+/* Styles for a menu button (hamburger icon) that appears on mobile */
+.menu-button {
+  display: none;
+  margin-right: 15px;
+  color: #424242;
+}
+
 .logo {
   display: flex;
   align-items: center;
@@ -20,7 +27,6 @@
   font-size: 28px;
   width: 28px;
   height: 28px;
-  color: #2847d4;
   color: #424242;
 }
 
@@ -35,7 +41,7 @@
 
 .user-info span {
   margin-right: 10px;
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .user-info mat-icon {
@@ -43,4 +49,25 @@
   width: 24px;
   height: 24px;
   color: #424242;
+}
+
+/* --- Responsive Adjustments for Header --- */
+
+@media (max-width: 768px) {
+  .menu-button {
+    display: block;
+  }
+
+  .app-header {
+    justify-content: space-between;
+    padding: 0 15px;
+  }
+
+  .logo {
+    font-size: 18px;
+  }
+
+  .user-info span {
+    display: none;
+  }
 }
