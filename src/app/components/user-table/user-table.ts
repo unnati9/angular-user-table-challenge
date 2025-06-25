@@ -59,7 +59,6 @@ export class UserTable implements OnInit {
 
   ngOnInit(): void {
     this.userService.getUsers().subscribe((data) => {
-      console.log(data);
       this.displayedColumns = [...Object.keys(data[0]), 'actions'];
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.paginator = this.paginator;
