@@ -1,0 +1,60 @@
+<div class="header-row">
+  <h2 class="user-count">All users <span>{{ dataSource.filteredData.length || 0 }}</span></h2>
+  <mat-form-field appearance="outline" class="search-bar">
+    <input matInput placeholder="Search" (keyup)="applyFilter($event)">
+    <mat-icon matSuffix>search</mat-icon> </mat-form-field>
+</div>
+<div class="table-container mat-elevation-z2">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-table-style">
+    <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+      <th mat-header-cell *matHeaderCellDef>{{ column | titlecase }}</th>
+      <td mat-cell *matCellDef="let user" (click)="onRowClick($event, user)">
+        <ng-container *ngIf="column !== 'actions'; else actionButtons">
+
+          <ng-container *ngIf="isEditing(user); else viewMode">
+            <ng-container *ngIf="column === 'bio'; else defaultInput">
+              <textarea [value]="user[column]" (input)="user[column] = $any($event.target).value"
+                (click)="$event.stopPropagation()" rows="3" class="editable-input editable-textarea"></textarea>
+            </ng-container>
+            <ng-template #defaultInput>
+              <input type="text" [value]="user[column]" (input)="user[column] = $any($event.target).value"
+                (click)="$event.stopPropagation()" class="editable-input" />
+            </ng-template>
+          </ng-container>
+
+          <ng-template #viewMode>
+            {{ user[column] }}
+          </ng-template>
+
+        </ng-container>
+
+        <ng-template #actionButtons>
+          <ng-container *ngIf="isEditing(user); else editButton">
+            <div class="action-buttons-editing">
+              <button mat-icon-button color="primary" matTooltip="Save"
+                (click)="saveEdit(user); $event.stopPropagation()">
+                <mat-icon>done</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" matTooltip="Cancel" (click)="cancelEdit(); $event.stopPropagation()">
+                <mat-icon>close</mat-icon>
+              </button>
+            </div>
+          </ng-container>
+          <ng-template #editButton>
+            <button mat-icon-button class="material-icons app-toolbar-menu save-button" *ngIf="!isEditing(user)"
+              matTooltip="Edit" color="primary" (click)="startEdit(user); $event.stopPropagation()">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </ng-template>
+        </ng-template>
+      </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns">
+    </tr>
+  </table>
+
+  <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> 
+</div>

@@ -1,0 +1,340 @@
+/* Base container for the whole table component */
+.table-container {
+    padding: 0;
+    background: #fafafd;
+    border-radius: 12px;
+    margin: 32px;
+    box-shadow: 0 4px 8px rgba(16, 30, 54, 0.06);
+    /* Softer, slightly larger shadow */
+    overflow-x: auto; /* Changed to auto for horizontal scrolling on smaller screens */
+    overflow-y: hidden; /* Prevent vertical scrollbar unless content is truly too tall */
+}
+
+/* Styles for the Material table itself */
+.mat-table-style {
+    width: 100%;
+    min-width: 700px; /* Ensure table always has a minimum width, enabling scroll */
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 0;
+}
+
+/* Styles for table data cells and header cells */
+.mat-table-style td,
+.mat-table-style th {
+    padding: 16px 10px;
+    font-size: 14px;
+    color: #333;
+    text-align: left;
+    line-height: 1.4;
+}
+
+/* Styles for table header cells */
+.mat-table-style th {
+    background: #f7f8fa;
+    font-weight: 600;
+    color: #555;
+    border-bottom: 1px solid #e0e0e0;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    white-space: nowrap; /* Prevent header text from wrapping */
+}
+
+/* Styles for table data cells */
+.mat-table-style td {
+    border-bottom: 1px solid #f0f0f0;
+    background: #ffffff;
+    white-space: nowrap; /* Prevent single-line text from wrapping */
+    overflow: hidden; /* Hide overflowing content */
+    text-overflow: ellipsis; /* Add ellipsis for overflowed text */
+    max-width: 400px; /* Set a max-width for content like 'bio' */
+    cursor: pointer;
+}
+
+/* Override for bio column to allow wrapping if needed, but still with ellipsis */
+.mat-table-style td:has(.editable-textarea),
+.mat-table-style td:has(.editable-input) {
+  white-space: normal; /* Allow bio text to wrap in view mode */
+  max-width: 300px; /* Adjust max-width for bio column */
+}
+
+
+/* Remove bottom border for the last row's cells */
+.mat-row:last-child td {
+    border-bottom: none;
+}
+
+/* Hover effect for rows */
+.mat-row:hover {
+    background-color: #f8f8f8;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+/* Header row for search and user count */
+.header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    background: #ffffff;
+    border-bottom: 1px solid #f0f0f0;
+    border-radius: 12px 12px 0 0;
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+    gap: 15px; /* Space between items when wrapped */
+}
+
+.user-count {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0;
+    color: #18181b;
+}
+
+.user-count span {
+    font-weight: 500;
+    color: #888;
+    margin-left: 8px;
+}
+
+.search-bar {
+    min-width: 280px;
+    margin: 0;
+    overflow: hidden;
+    height: 65px;
+    flex-grow: 1; /* Allow search bar to grow and fill space */
+    max-width: 350px; /* Max width for search bar on large screens */
+}
+
+/* Hide all parts of the default Material outline */
+.mat-form-field-appearance-outline .mat-form-field-outline-start,
+.mat-form-field-appearance-outline .mat-form-field-outline-gap,
+.mat-form-field-appearance-outline .mat-form-field-outline-end {
+  border: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* Remove default Material padding/margin from wrapper */
+.search-bar .mat-form-field-wrapper {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Style the inner container which now acts as our custom border */
+.search-bar .mat-form-field-flex {
+  border: 1px solid #e0e0e0;
+  background: #fdfdfd;
+  height: 40px;
+  padding: 0 16px;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.03);
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.search-bar .mat-form-field-flex:focus-within {
+    border-color: #007bff;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.05), 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.search-bar input {
+  flex-grow: 1;
+  padding: 0;
+  font-size: 15px;
+  height: 100%;
+  border: none;
+  background: transparent;
+  outline: none;
+}
+
+.search-bar .mat-form-field-suffix {
+  order: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+  height: 100%;
+  padding: 0;
+}
+
+.search-bar .mat-form-field-suffix mat-icon {
+  color: #888;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+
+/* Styles for editable input fields (text and textarea) */
+.editable-input {
+    width: calc(100% - 16px);
+    box-sizing: border-box;
+    padding: 8px;
+    border: 1px solid #dcdcdc;
+    border-radius: 6px;
+    font-size: 14px;
+    margin: 0;
+    vertical-align: middle;
+    background-color: #fbfbfb;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.editable-input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+    background-color: #fff;
+}
+
+/* Specific styles for textarea */
+.editable-textarea {
+    min-height: 70px;
+    height: auto;
+    resize: vertical;
+    vertical-align: top;
+    white-space: normal; /* Allow text wrapping in textarea */
+}
+
+/* Styles for action buttons container in editing mode */
+.action-buttons-editing {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 60px;
+}
+
+/* General styles for Material icon buttons within the table */
+.mat-icon-button {
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
+    border-radius: 50%;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.mat-icon-button mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+}
+
+/* Specific styles for the edit button */
+.mat-icon-button.app-toolbar-menu.save-button {
+    color: #666;
+}
+
+.mat-icon-button.app-toolbar-menu.save-button:hover {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+/* Specific styles for save button */
+.mat-icon-button[color="primary"] {
+    color: #007bff;
+}
+
+.mat-icon-button[color="primary"]:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+/* Specific styles for cancel button */
+.mat-icon-button[color="warn"] {
+    color: #dc3545;
+}
+
+.mat-icon-button[color="warn"]:hover {
+    background-color: rgba(220, 53, 69, 0.1);
+}
+
+
+/* Paginator styling */
+.mat-paginator {
+    background: #ffffff;
+    border-top: 1px solid #f0f0f0;
+    border-radius: 0 0 12px 12px;
+    padding: 12px 20px;
+    box-shadow: 0 -2px 4px rgba(16, 30, 54, 0.02);
+}
+
+/* Adjust paginator content alignment */
+.mat-paginator-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Optional: Hide specific Material components' default shadows if they interfere */
+.mat-elevation-z2 {
+    box-shadow: none !important;
+}
+
+/* --- Responsive Adjustments for User Table --- */
+
+/* For screens smaller than 768px (e.g., tablets in portrait, large phones) */
+@media (max-width: 768px) {
+  .table-container {
+    margin: 20px; /* Reduce margin on smaller screens */
+  }
+
+  .header-row {
+    padding: 15px 20px; /* Reduce header padding */
+    flex-direction: column; /* Stack user count and search bar */
+    align-items: flex-start; /* Align stacked items to the left */
+  }
+
+  .user-count {
+    font-size: 18px;
+    margin-bottom: 10px; /* Space between count and search */
+  }
+
+  .search-bar {
+    width: 100%; /* Make search bar take full width */
+    max-width: none; /* Remove max-width constraint */
+    min-width: unset; /* Remove min-width constraint */
+  }
+
+  .mat-table-style td,
+  .mat-table-style th {
+    padding: 12px 15px; /* Reduce cell padding */
+    font-size: 13px; /* Smaller font size */
+  }
+
+  .mat-paginator {
+    padding: 10px 15px; /* Reduce paginator padding */
+  }
+}
+
+/* For screens smaller than 480px (e.g., typical mobile phones) */
+@media (max-width: 480px) {
+  .table-container {
+    margin: 10px; /* Even smaller margin */
+    border-radius: 8px; /* Slightly less rounded corners */
+  }
+
+  .header-row {
+    padding: 10px 15px; /* Further reduce header padding */
+    gap: 10px; /* Reduce gap between wrapped items */
+  }
+
+  .user-count {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  .mat-table-style th {
+    font-size: 12px; /* Smaller header font */
+  }
+
+  .mat-table-style td {
+    font-size: 12px; /* Smaller cell font */
+    max-width: 150px; /* Adjust max-width for columns on very small screens */
+  }
+}
