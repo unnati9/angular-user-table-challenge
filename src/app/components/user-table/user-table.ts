@@ -1,15 +1,17 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { User } from '../../services/user';
-import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { Router } from '@angular/router';
+
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button'; // Import MatButtonModule
-import { MatTooltipModule } from '@angular/material/tooltip'; // Import MatTooltipModule
+
+import { User } from '../../services/user';
 
 @Component({
   selector: 'app-user-table',
@@ -18,39 +20,20 @@ import { MatTooltipModule } from '@angular/material/tooltip'; // Import MatToolt
     CommonModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule,
     MatFormFieldModule,
+    MatTooltipModule,
+    MatButtonModule,
     MatInputModule,
+    MatSortModule,
     MatIconModule,
-    MatButtonModule, // Add MatButtonModule here
-    MatTooltipModule, // Add MatTooltipModule here
   ],
   templateUrl: './user-table.html',
   styleUrl: './user-table.css',
 })
 export class UserTable implements OnInit {
-  users: any[] = [];
-  headers: string[] = [];
-  displayedColumns: string[] = [];
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   editingRowId: string | null = null;
-
-  startEdit(row: any) {
-    this.editingRowId = row.id;
-  }
-
-  cancelEdit() {
-    this.editingRowId = null;
-  }
-
-  saveEdit(row: any) {
-    // You can add logic to track/save changes if needed
-    this.editingRowId = null;
-  }
-
-  isEditing(row: any): boolean {
-    return this.editingRowId === row.id;
-  }
+  displayedColumns: string[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -66,9 +49,24 @@ export class UserTable implements OnInit {
     });
   }
 
-  onRowClick(event: MouseEvent, row: any): void {
-    // Navigate to details if the click was not on an editable element or action button
-    // this.router.navigate(['/details'], { state: { data: row } });
+  startEdit(row: any) {
+    this.editingRowId = row.id;
+  }
+
+  cancelEdit() {
+    this.editingRowId = null;
+  }
+
+  saveEdit(row: any) {
+    // Logic to track/save changes
+    this.editingRowId = null;
+  }
+
+  isEditing(row: any): boolean {
+    return this.editingRowId === row.id;
+  }
+
+  onRowClick(row: any): void {
     this.router.navigate(['/details', row.id], { state: { data: row } });
   }
 
